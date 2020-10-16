@@ -15,8 +15,13 @@ def index():
     """Homepage"""
     
     item = db.session.query(Country.country_name, Link.link).join(Link).all()
-   
-    rev = db.session.query(Review.date, Review.text, Review.score).filter_by(moderation_status='approved').all()
+
+    # revs = Review.query.filter_by(moderation_status="approved").all()
+    rev = db.session.query(
+        Review.date,
+        Review.text,
+        Review.score
+    ).filter_by(moderation_status='approved').all()
 
     
     return render_template("index.html", item=item, rev=rev) 
