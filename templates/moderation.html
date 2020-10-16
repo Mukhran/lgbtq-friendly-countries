@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Index page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+    <body>
+
+    {%for r in rstatus%}
+    <br>
+    {{r.date}}
+    
+    <br>
+   
+    <button type="button" onclick="approve({{r.id}})" id={{r.id}}>Approve</button>
+    
+    <button type="button">Reject</button>
+    <br>
+    <br>
+    {{r.text}}
+    <br>
+    {%endfor%}
+
+    
+    <script> 
+    function approve (reviewid){
+
+        alert(reviewid);
+        
+        $.post('/moderation/approved/' + reviewid);
+
+    }
+
+    </script>
+
+    </body>
+
+</html>
