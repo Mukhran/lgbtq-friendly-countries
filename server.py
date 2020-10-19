@@ -40,8 +40,19 @@ def update_status(id):
     # return redirect(url_for("approved"))
     return render_template("approved.html", id=id)
 
+@ app.route('/moderation/rejected/<id>', methods=["POST, GET"])
+def reject_status(id):
+    id = Review.query.get(id)
+    id.moderation_status = 'rejected'
+    db.session.commit()
+
+    return f" Rejected"
 
 
+@app.route('/submitreview', method = [POST])
+def submit_review():
+
+    return render_template('submitreview.html')
 
 @ app.route('/moderation')
 def review_status():

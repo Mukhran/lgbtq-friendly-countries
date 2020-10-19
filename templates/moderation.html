@@ -8,29 +8,32 @@
 
     <body>
 
-    {%for r in rstatus%}
-    <br>
-    {{r.date}}
+        {%for r in rstatus%}
+        <br>
+        {{r.date}}
     
-    <br>
+        <br>
    
-    <button type="button" onclick="approve({{r.id}})" id={{r.id}}>Approve</button>
+        <button type="button" onclick="approve({{r.id}})" id={{r.id}}>Approve</button>
     
-    <button type="button">Reject</button>
-    <br>
-    <br>
-    {{r.text}}
-    <br>
-    {%endfor%}
+        <button type="button" onclick="reject({{r.id}})" id={{r.id}}>Reject</button>
+        <br>
+        <br>
+        {{r.text}}
+        <br>
+        {%endfor%}
 
     
     <script> 
     function approve (reviewid){
 
         alert(reviewid);
-        
         $.post('/moderation/approved/' + reviewid);
+    }
 
+    function reject (reviewid){
+        alert(reviewid);
+        $.post('/moderation/rejected/' + reviewid);
     }
 
     </script>
