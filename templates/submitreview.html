@@ -8,6 +8,18 @@
 
         <p>Review</p>
 
+        <form action="/submitreview" method="POST">Review
+          <input type="text" name="review">
+          <select name="country">
+          {%for i in item%}
+          <option value='{{i.id}}'>{{i.country_name}}</option>
+          {%endfor%}
+          </select>
+          
+          <br>
+          <input type="submit">
+        </form>
+
 
     </body>
 

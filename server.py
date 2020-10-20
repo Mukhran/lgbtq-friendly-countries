@@ -49,15 +49,25 @@ def reject_status(id):
     return f" Rejected"
 
 
-@app.route('/submitreview', method = [POST])
+@app.route('/submitreview', methods=['POST', 'GET'])
 def submit_review():
+    text= request.form.get("review")
+    
+    country=request.form.get("country")
+    if text is not None:
+        r = Review(moderation_status="pending")
 
-    return render_template('submitreview.html')
+        return redirect('/', code=302)
+
+    item = db.session.query(Country.id, Country.country_name).all()
+    return render_template('submitreview.html', item=item)
 
 @ app.route('/moderation')
 def review_status():
 
     rstatus = Review.query.filter_by(moderation_status='pending')
+
+    
 
     
 
