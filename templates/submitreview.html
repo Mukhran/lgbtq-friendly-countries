@@ -8,14 +8,25 @@
 
         <p>Review</p>
 
-        <form action="/submitreview" method="POST">Review
-          <input type="text" name="review">
+        <form action="/submitreview" method="POST">
+          <label for="review">Share your experience</label>
+          <textarea id="review" name="review" rows="12" cols="50"></textarea>
           <select name="country">
           {%for i in item%}
           <option value='{{i.id}}'>{{i.country_name}}</option>
           {%endfor%}
           </select>
-          
+          <p>How was your experience?<p>
+          <label for="rating1">1</label>
+          <input type="radio" name="score" id="rating1" value="1">
+          <label for="rating2">2</label>
+          <input type="radio" name="score" id="rating2" value="2">
+          <label for="rating3">3</label>
+          <input type="radio" name="score" id="rating3" value="3">
+          <label for="rating4">4</label>
+          <input type="radio" name="score" id="rating4" value="4">
+          <label for="rating5">5</label>
+          <input type="radio" name="score" id="rating5" value="5">
           <br>
           <input type="submit">
         </form>
