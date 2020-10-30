@@ -8,6 +8,13 @@
 
     <body>
 
+
+        <h1> Welcome, {{name}}!</h1>
+
+        <a href="{{ url_for('auth.logout')}}">Logout</a>
+ 
+
+
         {%for r in rstatus%}
         <br>
         {{r.date}}

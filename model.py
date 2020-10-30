@@ -1,14 +1,12 @@
 
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 import os
 import pdb
 
 
 db = SQLAlchemy()
-
-# app.secret_key = "earth_seth_lax_amply"
-
 
 
 class Country(db.Model):
@@ -50,6 +48,20 @@ class Link(db.Model):
 
     def __repr__(self):
         return f'url={self.link} country={self.country.country_name}'
+
+
+class User(UserMixin, db.Model):
+    
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(100))
+
+    def __repr__(self):
+        
+        return f' email={self.email} '
+
 
 
 def connect_to_db(app, db_uri="postgresql:///countryrating", echo=True):

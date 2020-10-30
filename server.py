@@ -1,14 +1,26 @@
 """Server for my unnamed app."""
 
-from flask import Flask, render_template, request, redirect, url_for
-from model import db, Country, Link, Review, connect_to_db
-# from sqlalchemy.orm import sessionmaker
+from flask import Flask, Blueprint, render_template, request, redirect, url_for
+from model import db, Country, Link, Review, connect_to_db, User
 from jinja2 import StrictUndefined
-from serverkey import SUPERSECRETSERVERKEY
-
+from flask_login import LoginManager, login_required, current_user
 
 
 app = Flask(__name__)
+app.secret_key = "Oc_t#o20$_b"
+
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(id):
+        # since the user_id is just the primary key of our user table, use it in the query for the user
+    return User.query.get(int(id))
+
+#bluerpint for auth route in app
+from auth import auth as auth_blueprint
+app.register_blueprint(auth_blueprint)
 
 
 
@@ -17,7 +29,6 @@ def index():
     """Homepage"""
     
     country_filter=request.args.get("country_filter")
-    print(country_filter,'#####################')
     item = db.session.query(Country.country_name, Link.link).join(Link).all()
 
     # revs = Review.query.filter_by(moderation_status="approved").all()
@@ -33,6 +44,7 @@ def index():
     
 
 @ app.route('/moderation/approved/<id>', methods=["POST", "GET"])
+@login_required
 def update_status(id):
     id = Review.query.get(id)
     id.moderation_status = 'approved'
@@ -41,6 +53,7 @@ def update_status(id):
     return render_template("approved.html", id=id)
 
 @ app.route('/moderation/rejected/<id>', methods=["POST", "GET"])
+@login_required
 def reject_status(id):
     id = Review.query.get(id)
     id.moderation_status = 'rejected'
@@ -56,14 +69,9 @@ def submit_review():
     
     if text is not None:
         country=Country.query.filter_by(country_name=request.form.get("country")).first()
-        
         country_id=request.form.get("country")
-        
         score=request.form.get("score")
-        
-
         r=Review(text=text, score=score, moderation_status='pending', country_id=country_id)
-        
         db.session.add(r)
         db.session.commit()
         return redirect('/')
@@ -72,15 +80,12 @@ def submit_review():
     return render_template('submitreview.html', item=item)
 
 @ app.route('/moderation')
+@login_required
 def review_status():
 
     rstatus = Review.query.filter_by(moderation_status='pending')
 
-    
-
-    
-
-    return render_template("moderation.html", rstatus=rstatus)
+    return render_template("moderation.html", rstatus=rstatus, name=current_user.name)
 
 
 if __name__ == '__main__':
