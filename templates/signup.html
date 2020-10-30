@@ -1,0 +1,31 @@
+
+    <h3>Sign Up</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }} Go to <a href="{{ url_for('auth.login') }}">login page</a>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+
+        <form action="/signup" method="POST">
+           
+                <div>
+                    <input type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+           
+
+                <div>            
+                    <input type="text" name="name" placeholder="Name" autofocus="">
+                </div>
+            
+                <div>
+                <input type="password" name="password" placeholder="Password">
+                </div>
+            
+            <input type="submit" value="Sign Up">
+            
+        </form>
+    </div>
