@@ -2,6 +2,7 @@
 
 <head>
     <title>Index page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
     <body>
@@ -11,28 +12,55 @@
     {%for i in item%}
     {{i.country_name}}
     <a href='{{i.link}}'>Click</a>
-    <br>
-
     {%endfor%}
-    <br>
-    <br>
+ 
+    <h2> Sort reviews by</h2>
+    <form action="/" >
+    <label for="country">Choose a country:</label>
+        <select id ="cntrySelect" name="country" onchange="selectCountry()">
+            <option value="">Choose a country</option>
+            {%for i in country_item%}
+            <option value="{{i.id}}">{{i.country_name}}</option>
+            {%endfor%}
+        </select>
+    </form>
+
+    <label for="score">Choose rating:</label>
+    
+
+
+
+    <div>
       <button onclick='window.location = "/submitreview"'>Share your experience</button>
-     <br>
-     <br> 
-    {%for r in rev%}
-    {{r.date}}
-    <br>
-    {{r.moderation_status}}
-    <br>
-    {{r.score}}
-    <br>
-    {{r.text}}
-    <br>
-    {%endfor%}
-
+    </div>
+     
+     <div>
+        {%for r in rev%}
+        {{r.date}}
+        <br>
+        {{r.moderation_status}}
+        <br>
+        {{r.score}}
+        <br>
+        {{r.text}}
+        <br>
+        {%endfor%}
+    </div>
 
   
+    <script>
 
+    function selectCountry(){
+        c_id=document.getElementById("cntrySelect").value;
+        alert(c_id);
+       
+    }
+
+
+
+
+    
+    </script>
 
 
     </body>

@@ -28,19 +28,27 @@ app.register_blueprint(auth_blueprint)
 def index():
     """Homepage"""
     
-    country_filter=request.args.get("country_filter")
+    
+    rev = Review.query.filter_by(moderation_status="approved").all()
+    country_filter=request.args.get("country")
+    if country_filter:
+
+        # Review.query.filter(Review.country_id==c_id).all()
+        # rev=db.session.query(
+        #     Review.date,
+        #     Review.text
+        # ).filter_by(moderation_status="approved").all()
+
+      
+
+        
+
     item = db.session.query(Country.country_name, Link.link).join(Link).all()
 
-    # revs = Review.query.filter_by(moderation_status="approved").all()
-    rev = db.session.query(
-        Review.date,
-        Review.text,
-        Review.score
-    ).filter_by(moderation_status='approved').all()
+    country_item=Country.query.all()
 
 
-    
-    return render_template("index.html", item=item, rev=rev) 
+    return render_template("index.html", item=item, rev=rev, country_item=country_item, ) 
     
 
 @ app.route('/moderation/approved/<id>', methods=["POST", "GET"])
