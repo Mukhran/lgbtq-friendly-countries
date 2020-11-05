@@ -15,18 +15,27 @@
     {%endfor%}
  
     <h2> Sort reviews by</h2>
-    <form action="/" >
+    <form action="/" method="GET" id="myform">
     <label for="country">Choose a country:</label>
-        <select id ="cntrySelect" name="country" onchange="selectCountry()">
-            <option value="">Choose a country</option>
+        <select id ="cntrySelect" name="country" onchange="submitForm();">
+            <option value="">All countries</option>
             {%for i in country_item%}
-            <option value="{{i.id}}">{{i.country_name}}</option>
+                <option value="{{i.id}}" {% if i.id== country_filter|int %} selected="selected"{% endif %}>{{i.country_name}}</option>
             {%endfor%}
         </select>
-    </form>
+    <form>
 
+    <form action="/" method="GET" id="myscoreform">
     <label for="score">Choose rating:</label>
-    
+        <select id="scoreSelect" name="score" onchange="submitForm();">
+            <option value ="">All ratings</option>
+            <option value="1" {% if 1==score_filter|int %} selected="selected"{% endif %}>More than 0</option>
+            <option value="2" {% if 2==score_filter|int %} selected="selected" {% endif %}>More than 1</option>
+            <option value="3" {% if 3==score_filter|int %} selected="selected" {% endif %}>More than 2</option>
+            <option value="4" {% if 4==score_filter|int %} selected="selected" {% endif%}>More than 3</option>
+            <option value="5" {% if 5==score_filter|int %} selected="selected" {% endif%}>More than 4</option>
+        </select>
+    <form>
 
 
 
@@ -50,16 +59,13 @@
   
     <script>
 
-    function selectCountry(){
-        c_id=document.getElementById("cntrySelect").value;
-        alert(c_id);
-       
-    }
-
-
-
-
-    
+        function submitForm(){
+         
+            document.getElementById("myform").submit();
+            document.getElementById("myscoreform").submit();
+        }
+ 
+   
     </script>
 
 

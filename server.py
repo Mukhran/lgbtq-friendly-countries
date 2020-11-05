@@ -29,18 +29,19 @@ def index():
     """Homepage"""
     
     
-    rev = Review.query.filter_by(moderation_status="approved").all()
+    q= Review.query.filter_by(moderation_status="approved")
+    
     country_filter=request.args.get("country")
+    
     if country_filter:
 
-        # Review.query.filter(Review.country_id==c_id).all()
-        # rev=db.session.query(
-        #     Review.date,
-        #     Review.text
-        # ).filter_by(moderation_status="approved").all()
+        q=q.filter(Review.country_id==country_filter)
 
-      
+    score_filter = request.args.get("score")
 
+    if score_filter:
+        q=q.filter(Review.score==score_filter)
+    rev=q.all()
         
 
     item = db.session.query(Country.country_name, Link.link).join(Link).all()
@@ -48,7 +49,7 @@ def index():
     country_item=Country.query.all()
 
 
-    return render_template("index.html", item=item, rev=rev, country_item=country_item, ) 
+    return render_template("index.html", item=item, rev=rev, score_filter=score_filter, country_filter=country_filter, country_item=country_item, ) 
     
 
 @ app.route('/moderation/approved/<id>', methods=["POST", "GET"])
