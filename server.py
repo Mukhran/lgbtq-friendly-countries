@@ -4,7 +4,8 @@ from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from model import db, Country, Link, Review, connect_to_db, User
 from jinja2 import StrictUndefined
 from flask_login import LoginManager, login_required, current_user
-
+import json
+from sqlalchemy import asc, desc
 
 app = Flask(__name__)
 app.secret_key = "Oc_t#o20$_b"
@@ -29,7 +30,7 @@ def index():
     """Homepage"""
     
     
-    q= Review.query.filter_by(moderation_status="approved")
+    q= Review.query.filter_by(moderation_status="approved").order_by(Review.date.desc())
     
     country_filter=request.args.get("country")
     
@@ -50,7 +51,15 @@ def index():
 
 
     return render_template("index.html", item=item, rev=rev, score_filter=score_filter, country_filter=country_filter, country_item=country_item, ) 
+
+@ app.route('/amCharts/<id>')
+def amCharts_redirect(id):
+    item = db.session.query(Country.country_name, Link.link).filter(Link.amcharts_id==id).join(Link).first()
+
     
+    return redirect(item.link)
+
+
 
 @ app.route('/moderation/approved/<id>', methods=["POST", "GET"])
 @login_required

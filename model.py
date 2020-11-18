@@ -45,6 +45,7 @@ class Link(db.Model):
     link = db.Column(db.String)
     country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
     country = db.relationship('Country', backref='links')
+    amcharts_id = db.Column(db.String)
 
     def __repr__(self):
         return f'url={self.link} country={self.country.country_name}'

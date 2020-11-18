@@ -3,16 +3,22 @@
 <head>
     <title>Index page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
+    <link rel="stylesheet" href="/static/map.css">
+</head>
+  
     <body>
- 
-        
+    <div id="chartdiv"></div>
+
+    <div>
+        <button onclick="window.location = '/submitreview'">Share your experience</button>
+    <div>   
     
-    {%for i in item%}
-    {{i.country_name}}
-    <a href='{{i.link}}'>Click</a>
-    {%endfor%}
+
  
     <h2> Sort reviews by</h2>
     <form action="/" method="GET" id="myform">
@@ -39,15 +45,12 @@
 
 
 
-    <div>
-      <button onclick='window.location = "/submitreview"'>Share your experience</button>
-    </div>
      
      <div>
         {%for r in rev%}
         {{r.date}}
         <br>
-        {{r.moderation_status}}
+        
         <br>
         {{r.score}}
         <br>
@@ -57,18 +60,20 @@
     </div>
 
   
-    <script>
+   
 
-        function submitForm(){
+    <script>
+    function submitForm(){
          
             document.getElementById("myform").submit();
             document.getElementById("myscoreform").submit();
-        }
- 
-   
+    }
+  
     </script>
 
+    <script src="/static/map.js"></script>
 
     </body>
+
 
 </html>
