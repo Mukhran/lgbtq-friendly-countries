@@ -1,77 +1,105 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<head>
-    <title>Index page</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
-    <link rel="stylesheet" href="/static/map.css">
-</head>
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        
+        <title>Countries page</title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+        <link rel="stylesheet" href="/static/map.css">
+        <link rel="stylesheet" href="/static/index.css">       
+    </head>
   
     <body>
-    <div id="chartdiv"></div>
+        <div id="chartdiv"></div>
 
-    <div>
-        <button onclick="window.location = '/submitreview'">Share your experience</button>
-    <div>   
-    
-
- 
-    <h2> Sort reviews by</h2>
-    <form action="/" method="GET" id="myform">
-    <label for="country">Choose a country:</label>
-        <select id ="cntrySelect" name="country" onchange="submitForm();">
-            <option value="">All countries</option>
-            {%for i in country_item%}
-                <option value="{{i.id}}" {% if i.id== country_filter|int %} selected="selected"{% endif %}>{{i.country_name}}</option>
-            {%endfor%}
-        </select>
-    <form>
-
-    <form action="/" method="GET" id="myscoreform">
-    <label for="score">Choose rating:</label>
-        <select id="scoreSelect" name="score" onchange="submitForm();">
-            <option value ="">All ratings</option>
-            <option value="1" {% if 1==score_filter|int %} selected="selected"{% endif %}>More than 0</option>
-            <option value="2" {% if 2==score_filter|int %} selected="selected" {% endif %}>More than 1</option>
-            <option value="3" {% if 3==score_filter|int %} selected="selected" {% endif %}>More than 2</option>
-            <option value="4" {% if 4==score_filter|int %} selected="selected" {% endif%}>More than 3</option>
-            <option value="5" {% if 5==score_filter|int %} selected="selected" {% endif%}>More than 4</option>
-        </select>
-    <form>
+        <div class="container">
+            <h2 class="rainbow-text">Same-sex marriage in Europe for non-residents</h2>
+        </div>
 
 
 
-     
-     <div>
-        {%for r in rev%}
-        {{r.date}}
-        <br>
-        
-        <br>
-        {{r.score}}
-        <br>
-        {{r.text}}
-        <br>
-        {%endfor%}
-    </div>
+        <div class="container">
 
+            <button type="button" class="btn btn-primary float-right"  onclick="window.location = '/submitreview'">Share your experience</button>
+            
+        </div>
+
+
+
+        <div class="container" >
+            <h4> Sort reviews by</h4>
+            <form action="/" method="GET" id="myform">
+            <label for="country"><b>Country</b></label>
+                <select id ="cntrySelect" name="country" onchange="submitForm();">
+                    <option value="">All countries</option>
+                    {%for i in country_item%}
+                        <option value="{{i.id}}" {% if i.id== country_filter|int %} selected="selected"{% endif %}>{{i.country_name}}</option>
+                    {%endfor%}
+                </select>
+            <form>
+
+
+
+
+            <form action="/" method="GET" id="myscoreform">
+            <label for="score"><b>Rating</b></label>
+                <select id="scoreSelect" name="score" onchange="submitForm();">
+                    <option value ="">All ratings</option>
+                    <option value="1" {% if 1==score_filter|int %} selected="selected"{% endif %}>More than 0</option>
+                    <option value="2" {% if 2==score_filter|int %} selected="selected" {% endif %}>More than 1</option>
+                    <option value="3" {% if 3==score_filter|int %} selected="selected" {% endif %}>More than 2</option>
+                    <option value="4" {% if 4==score_filter|int %} selected="selected" {% endif%}>More than 3</option>
+                    <option value="5" {% if 5==score_filter|int %} selected="selected" {% endif%}>More than 4</option>
+                </select>
+            <form>
+        </div>
+
+
+        <div class="container">
+            
+                {%for r in rev%}
+                    
+                    <br>
+                    {{r.date}}
+                    <br>
+                    Rating: {{r.score * '⭐'}}
+                    <br>
+                    {{r.text}}
+                    <br>
+                {%endfor%}
+       
+        </div>
   
    
 
-    <script>
-    function submitForm(){
+        <script>
+        function submitForm(){
          
             document.getElementById("myform").submit();
             document.getElementById("myscoreform").submit();
-    }
+        }
   
-    </script>
+        </script>
 
-    <script src="/static/map.js"></script>
+        <script src="/static/map.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+
 
     </body>
 
