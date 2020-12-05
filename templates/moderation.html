@@ -34,12 +34,12 @@
     <script> 
     function approve (reviewid){
 
-        alert(reviewid);
+       
         $.post('/moderation/approved/' + reviewid);
     }
 
     function reject (reviewid){
-        alert(reviewid);
+        
         $.post('/moderation/rejected/' + reviewid);
     }
 
