@@ -110,4 +110,4 @@ def review_status():
 if __name__ == '__main__':
     connect_to_db(app)
     # app.url_map.strict_slashes=False
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=False)
